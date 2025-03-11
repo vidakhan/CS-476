@@ -3,7 +3,6 @@ MediCheck
 
 Participants - Kashish Bhatt - 200484215 (Leader)
 Ashravi Mehta - 200479537
-Ibrahim Hassan - 200343818
 Vida Pathan - 200421835
 Yash Chiragkumar Panchal - 200504538
 
