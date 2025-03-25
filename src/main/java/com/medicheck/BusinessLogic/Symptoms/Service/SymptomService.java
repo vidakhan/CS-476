@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -26,4 +27,21 @@ public class SymptomService {
     public void saveSymptom(Symptom symptom) {
         symptomRepository.save(symptom);
     }
+
+
+    public Symptom extractSymptom(String symptom)
+    {
+        Optional<Symptom> optionalSymptom = symptomRepository.findByNameIgnoreCase(symptom);
+        if(optionalSymptom.isPresent())
+            return optionalSymptom.get();
+        else {
+            Symptom symptom1 = Symptom.builder()
+                    .name(symptom)
+                    .description(symptom)
+                    .build();
+            symptomRepository.saveAndFlush(symptom1);
+            return symptom1;
+        }
+    }
+
 }

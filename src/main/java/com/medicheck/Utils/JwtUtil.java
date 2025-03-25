@@ -2,19 +2,24 @@
 package com.medicheck.Utils;
 
 
+import com.medicheck.Configs.SecurityConfig;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
+
+@SuppressWarnings("unused")
 @Component
 public class JwtUtil {
-    private String secretKey = "your_secret_key"; // Change this to a secure key
+    private String secretKey = SecurityConfig.secretKey; // Change this to a secure key
     private long validityInMilliseconds = 3600000; // 1 hour
 
+    @SuppressWarnings("deprecation")
     public String createToken(String username) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
@@ -35,18 +40,20 @@ public class JwtUtil {
         return extractExpiration(token).before(new Date());
     }
 
+    @SuppressWarnings("deprecation")
     private Date extractExpiration(String token) {
         return Jwts.parser()
-                .setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8)))
+                .setSigningKey(secretKey)
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
                 .getExpiration();
     }
 
+    @SuppressWarnings("deprecation")
     public String extractUsername(String token) {
         return Jwts.parser()
-                .setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8)))
+                .setSigningKey(secretKey)
                 .build()
                 .parseClaimsJws(token)
                 .getBody()

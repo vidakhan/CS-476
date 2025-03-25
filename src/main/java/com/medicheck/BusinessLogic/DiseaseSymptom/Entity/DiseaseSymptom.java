@@ -2,18 +2,30 @@ package com.medicheck.BusinessLogic.DiseaseSymptom.Entity;
 
 
 import com.medicheck.BusinessLogic.Symptoms.Entity.Symptom;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import org.hibernate.validator.constraints.UUID;
-
-import javax.print.attribute.standard.Severity;
+import lombok.NoArgsConstructor;
 
 
+
+import java.io.Serializable;
+import java.util.UUID;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Data
+@Entity
 @Embeddable
-public class DiseaseSymptom {
+public class DiseaseSymptom implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID uuid;
+
+    @ManyToOne
     private Symptom symptom;
 
     private Severity severity;
