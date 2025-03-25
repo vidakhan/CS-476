@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/symptoms")
+@RequestMapping("/api/v1/symptoms")
 public class SymptomController {
 
     @Autowired

@@ -1,14 +1,25 @@
 package com.medicheck.BusinessLogic.Users.Controller;
 
 
+import com.medicheck.BusinessLogic.DoctorApplications.entity.DoctorApplication;
+import com.medicheck.BusinessLogic.DoctorApplications.service.DoctorsApplicationService;
 import com.medicheck.BusinessLogic.Users.Entity.User;
 import com.medicheck.BusinessLogic.Users.Service.UserService;
+import com.medicheck.BusinessLogic.Users.models.*;
+
+import com.medicheck.Utils.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@SuppressWarnings("unused")
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/v1/auth")
 public class UserController {
 
     @Autowired
@@ -17,15 +28,67 @@ public class UserController {
     @Autowired
     private JwtUtil jwtUtil;
 
+    @Autowired
+    private DoctorsApplicationService doctorsApplicationService;
+    
+
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody User user) {
-        userService.saveUser(user);
-        return ResponseEntity.ok("User registered successfully");
+    public ResponseEntity<RegisterResponseModel> register(@RequestBody RegisterUserModelRequest registerUserModelRequest) {
+        return userService.registerUser(registerUserModelRequest);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user) {
-        String token = userService.authenticate(user);
-        return ResponseEntity.ok(token);
+    public ResponseEntity<LoginResponseModel> login(@RequestBody LoginUserModelRequest loginUserModelRequest) {
+        return userService.loginUser(loginUserModelRequest);
     }
+
+
+    @GetMapping("/logout")
+    public ResponseEntity<String> logOut(HttpServletRequest httpServletRequest){
+        return userService.logOut(httpServletRequest);
+    }
+
+
+    @GetMapping("/checkUser")
+    public ResponseEntity<User> checkUser()
+    {
+        return userService.checkuser();
+    }
+
+
+
+
+    @PutMapping("/update")
+    public ResponseEntity<String> update(@RequestBody UpdateUserRequest updateUserRequest)
+    {
+        return userService.update(updateUserRequest);
+    }
+
+    @PutMapping("/changePassword")
+    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest)
+    {
+        return userService.changePassword(changePasswordRequest);
+    }
+
+    @PostMapping("/applyAsDoctor")
+    public ResponseEntity<String> applyAsDoctor(@Valid @RequestBody DoctorApplicationRequest doctorApplicationRequest)
+    {
+        return doctorsApplicationService.applyAsDoctor(doctorApplicationRequest);
+    }
+
+    @GetMapping("/myApplications")
+    public ResponseEntity<List<DoctorApplication>> myApplications()
+    {
+        return doctorsApplicationService.myApplications();
+    }
+
+
+
+
+
+
+
+
+
+
 }
