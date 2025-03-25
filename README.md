@@ -1,4 +1,16 @@
 # MediCheck
+
+# Members
+
+Kashish Bhatt
+
+Ashravi Mehta
+
+Vida Pathan
+
+Yash Chiragkumar Panchal
+
+# Project Idea
 1. Project Description - The accessibility of health care and awareness are significant challenges faced by people in both metropolitan and rural locations. People often have signs of illnesses but are unable to recognize their root cause or decide whether healthcare is required. 
 - Searching the internet for symptoms usually yields inaccurate or contradicting results, which can be confusing and distressing. Furthermore, it can be difficult and tedious to locate suitable medications or local physicians. 
 	- MediCheck seeks to address these problems by offering a thorough user-friendly platform that identifies possible diseases and prescribes over-the-counter medications, and specialized doctors based on the user's symptoms. 
